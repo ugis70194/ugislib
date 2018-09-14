@@ -3,6 +3,18 @@ using namespace std;
 
 int gcd(int n,int m){return !m?n:gcd(m,n%m);}
 
+//Sieve of Eratosthenes
+vector<bool> vec(100000001,true);
+void prime(){
+    vec[0] = vec[1] = false;
+    for(int i=4;i<=100000000;i+=2) vec[i] = false;
+    for(int i=3;i<=10000;i+=2){
+        if(vec[i]){
+            for(int j=i*2;j<=100000000;j+=i) vec[j] = false; 
+        }
+    }
+}
+
 //Dijkstra
 using P = pair<int,int>;
 struct edge{int to,cost;};//行き先とそこまでの費用
