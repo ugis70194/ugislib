@@ -35,7 +35,7 @@ vector<int> dijkstra(int start){
         //現在地に記録されている費用の和より今までの費用の和が大きいならスキップ
         if(dist[p.second] < p.first) continue;
         for(auto &e : G[p.second]){//現在地から行ける点を列挙
-            if(dist[e.to] > dist[p.second] + e.cost){//現在行き先に記録されている値より、現在地に記録されている値のそこまでの費用の和が小さいなら
+            if(dist[e.to] > dist[p.second] + e.cost){//現在行き先に記録されている値より、現在地に記録されている値とそこへ行くの費用の和が小さいなら
                 dist[e.to] = dist[p.first] + e.cost; //行き先の記録を更新
                 Q.push({dist[e.to],e.to}); //行き先とそこまでの値を突っ込む 
             }
@@ -44,4 +44,21 @@ vector<int> dijkstra(int start){
     return dist;//始点から各点に行く最小コストが記録されたものを返す
 } 
 
-
+//union find
+struct UnionFind{
+    vector<int> par;
+    UnionFind(int N) : par(N){
+        for(int i=0;i<N;++i) par[i] = i;
+    }
+    int root(int x){
+        if(par[x] == x) return x;
+        else return par[x] = root(par[x]);
+    }
+    bool same(int x,int y){return root(x) == root(y);}
+    void unite(int x,int y){
+        x = root(x); 
+        y = root(y);
+        if (x == y) return; 
+        par[x] = y; 
+    }
+};
