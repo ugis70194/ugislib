@@ -49,6 +49,14 @@ int main(){
   }
 }
 
+
+
+
+
+
+
+
+
 //Repeated Spell
 const int mod = 1000000007;
 int n, m, dp[1009][1009]; string s, t;
@@ -96,8 +104,31 @@ int main() {
 	cout << dp[N] << endl;
 }
 
-#include <iostream>
-using namespace std;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 const int MAX_N = 110000;
 
