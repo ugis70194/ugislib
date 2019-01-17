@@ -1,2 +1,2 @@
-C++ algorithm
+C++ algorithm  
 JS function
