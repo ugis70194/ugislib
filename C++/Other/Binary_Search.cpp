@@ -9,4 +9,3 @@ bool Binary_Search(int N,std::vector<int>& S){
     }
     return false;
 }
-     
