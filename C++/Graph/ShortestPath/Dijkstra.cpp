@@ -75,3 +75,40 @@ namespace b{
     }
 
 }
+
+namespace c{
+    vector<vector<int>> dijkstra(vector<vector<edge>>& Graph,int vertex, int start, int tickets){
+    #define INF 1e18
+    using PP = pair<int,P>;
+    #define weight first
+    #define now second.first
+    #define ticket second.second
+
+    vector<vector<int>> dist(vertex,vector<int>(tickets+1,INF));
+    priority_queue<vector<PP>,vector<PP>,greater<PP>> Q;
+
+    Q.push({0,{start,tickets}});
+    for(int i=0;i<=tickets;i++) dist[start][i] = 0;
+
+    while(!Q.empty()){
+        PP p = Q.top(); Q.pop();
+        
+        if(dist[p.now][p.ticket] < p.weight) continue;
+
+        for(edge Edge : Graph[p.now]){
+            if(dist[Edge.to][p.ticket] < p.weight + Edge.cost) continue;
+            
+            dist[Edge.to][p.ticket] = p.weight + Edge.cost;
+            Q.push({dist[Edge.to][p.ticket], {Edge.to,p.ticket}});
+
+            if(p.ticket > 0){
+                if(dist[Edge.to][p.ticket-1] < p.weight) continue;
+                dist[Edge.to][p.ticket-1] = p.weight;
+                Q.push({dist[Edge.to][p.ticket-1], {Edge.to,p.ticket-1}});
+            }
+        }
+    }
+    
+    return dist;
+    }   
+}
