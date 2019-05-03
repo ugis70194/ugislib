@@ -1,38 +1,47 @@
 #include<iostream>
 #include<vector>
 #include<random>
+#include<unordered_map>
 using namespace std;
 
-template <typename comparable> 
-int partition(int left, int right, vector<comparable>& arr,int j) {
-	cout << left << " " << right << endl;
-	int pivotIndex = (left + right) / 2;
-	const int pivot = arr[pivotIndex];
-	swap(arr[right], arr[pivotIndex]);
+template <typename comparable>
+int partition(vector<comparable>& arr, const int& left,const int& right) {
+	const int pivot = arr[right];
+	int pivotIndex = left - 1;
 
-	cout << j << endl;
-	
-	pivotIndex = left;
 	for (int i = left; i < right; i++) {
-		if (arr[i] <= pivot) {
-			swap(arr[i], arr[pivotIndex]);
+		if (arr[i].num <= pivot) {
 			pivotIndex++;
+			swap(arr[i], arr[pivotIndex]);
 		}
 	}
-	swap(arr[right],arr[pivotIndex]);
+	swap(arr[right], arr[++pivotIndex]);
 
 	return pivotIndex;
 }
 
 template <typename comparable>
-void quicksort(int left, int right, vector<comparable>& arr,int i) {
-
+void quicksort(vector<comparable>& arr,const int& left,const int& right) {
 	if (left >= right) return;
 
-	int pivotIndex = partition(left, right, arr, i);
-	cout << "i " << i << endl;
-	i++;
-	
-	quicksort(left, pivotIndex - 1, arr, i);
-	quicksort(pivotIndex + 1, right, arr, i);
+	int pivotIndex = partition(arr, left, right);
+
+	quicksort(arr, left, pivotIndex - 1);
+	quicksort(arr, pivotIndex + 1, right);
+}
+
+int main() {
+	int N;
+	cin >> N;
+	vector<int> arr(N);
+
+	random_device rndSeed;
+	default_random_engine rndEngine(rndSeed());
+	uniform_int_distribution<> rnd(0, N * 100);
+
+	for (int i = 0; i < N; i++) arr[i] = rnd(rndEngine);
+
+	quicksort(arr, 0, N-1);
+
+	for (auto p : arr) cout << p << " ";
 }
