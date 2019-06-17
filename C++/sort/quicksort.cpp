@@ -29,19 +29,3 @@ void quicksort(vector<comparable>& arr,const int& left,const int& right) {
 	quicksort(arr, left, pivotIndex - 1);
 	quicksort(arr, pivotIndex + 1, right);
 }
-
-int main() {
-	int N;
-	cin >> N;
-	vector<int> arr(N);
-
-	random_device rndSeed;
-	default_random_engine rndEngine(rndSeed());
-	uniform_int_distribution<> rnd(0, N * 100);
-
-	for (int i = 0; i < N; i++) arr[i] = rnd(rndEngine);
-
-	quicksort(arr, 0, N-1);
-
-	for (auto p : arr) cout << p << " ";
-}

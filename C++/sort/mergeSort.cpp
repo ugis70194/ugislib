@@ -20,7 +20,6 @@ void merge(vector<comparable>& arr, const int& left,const int& mid, const int& r
 
 	int i = 0, j = 0, cnt = 0;
 	for (int k = left; k < right; k++) {
-		sum++;
 		if (i >= leftSideLength) {
 			arr[k] = rightSide[j];
 			j++;
@@ -51,20 +50,4 @@ void mergeSort(vector<comparable>& arr, const int& left, const int& right) {
 		mergeSort(arr, mid, right);
 		merge(arr, left, mid, right);
 	}
-}
-
-int main() {
-	int N;
-	cin >> N;
-	vector<int> arr(N);
-
-	random_device rndSeed;
-	default_random_engine rndEngine(rndSeed());
-	uniform_int_distribution<> rnd(0, N * 100);
-
-	for (int i = 0; i < N; i++) arr[i] = rnd(rndEngine);
-
-	mergeSort(arr, 0, N);
-    
-	for (int i = 0; i < N; i++) cout << arr[i] << " ";
 }
