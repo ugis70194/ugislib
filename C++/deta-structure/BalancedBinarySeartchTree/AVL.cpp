@@ -1,25 +1,17 @@
 #include<bits/stdc++.h>
 
- 
 template<typename T>
 class Node{
 public:
     T value;
     int64_t height;
-    Node* left, right;
+    Node<T>* left;
+    Node<T>* right;
     Node() : value(0), height(1), left(nullptr), right(nullptr) {};
 };
 
 template<typename T>
 class AVLTree{
-public:
-    class Node{
-    public:
-        T value;
-        int64_t height;
-        Node* left, right;
-        Node() : value(0), height(1), left(nullptr), right(nullptr) {};
-    };
 private:
     Node<T>* root = nullptr;
 
@@ -69,11 +61,11 @@ private:
         return height(N->left) - height(N->right);
     }
 
-    Node<T>* setNode(Node<T>* node, T val){
+    Node<T>* insertNode(Node<T>* node, T val){
         if(node == nullptr) return newNode(val);
 
-        if(val < node->value) node->left = insert(node->left, val);
-        else node->right = insert(node->right, val);
+        if(val < node->value) node->left = insertNode(node->left, val);
+        else node->right = insertNode(node->right, val);
 
         node->height = std::max(height(node->left), height(node->right)) + 1;
 
@@ -109,7 +101,7 @@ private:
             node->left = removeNode(node->left, val);
         }
         else if(val > node->value){
-            node->right = remove(node->right, val);
+            node->right = removeNode(node->right, val);
         }
         else{
             if(node->left == nullptr && node->right == nullptr){
@@ -147,18 +139,28 @@ private:
         return node;
     }
 
-    Node<T>* searchNode(Node<T>* node, T val){
+    Node<T>* findNode(Node<T>* node, T val){
         if(node == nullptr) return node;
 
-        if(val < node->value) node = searchNode(node->left, val);
-        else if(val > node->value) node = searchNode(node->right, val);
+        if(val < node->value) node = findNode(node->left, val);
+        else if(val > node->value) node = findNode(node->right, val);
 
         return node;
     }
 
 public:
-    void insert(T val){ root = setNode(root, val); }
+    void insert(T val){ root = insertNode(root, val); }
     void remove(T val){ root = removeNode(root, val); }
-    Node<T>* search(T val) { return searchNode(root, val); }
-    AVLTree() : root(nullptr);
+    Node<T>* find(T val) { return findNode(root, val); }
+    AVLTree() : root(nullptr) {}
 };
+
+int main(){
+    AVLTree<int> avl;
+    avl.insert(1);
+    Node<int>* a = avl.find(1);
+    avl.remove(1);
+    Node<int>* b = avl.find(1);
+    avl.remove(1);
+    std::cout << a->value << " " << b->value << std::endl;
+}
