@@ -15,9 +15,36 @@ class AVLTree{
 private:
     Node<T>* root = nullptr;
 
-    int64_t height(Node<T>* N){
-        if(N == nullptr) return 0;
-        return N->height;
+    int64_t height(Node<T>* node){
+        if(node == nullptr) return 0;
+        return node->height;
+    }
+    void fix(Node<T>* node){
+        if(node == nullptr) return;
+        node->height = std::max(height(node->left), height(node->right)) + 1;
+    }
+    int64_t diffHeightLR(Node<T>* node){
+        if(node == nullptr) return 0;
+        return height(node->left) - height(node->right);
+    }
+
+    Node<T>* balance(Node<T>* node){
+        if(node == nullptr) return node;
+        if(diffHeightLR(node) > 1 && diffHeightLR(node->left) > 0){
+            return rightRotate(node);
+        }
+        if(diffHeightLR(node) < -1 && diffHeightLR(node->right) < 0){
+            return leftRotate(node);
+        }
+        if(diffHeightLR(node) > 1 && diffHeightLR(node->left) < 0){
+            node->left = leftRotate(node->left);
+            return rightRotate(node);
+        }
+        if(diffHeightLR(node) < -1 && diffHeightLR(node->right) > 0){
+            node->right = rightRotate(node->right);
+            return leftRotate(node);
+        }
+        return node;
     }
 
     Node<T>* newNode(T val){
@@ -37,8 +64,8 @@ private:
         X->right = Y;
         Y->left = T2;
 
-        Y->height = std::max(height(Y->left), height(Y->right)) + 1;
-        X->height = std::max(height(X->left), height(X->right)) + 1;
+        fix(Y);
+        fix(X);
         
         return X;
     }
@@ -50,15 +77,10 @@ private:
         Y->left = X;
         X->right = T2;
 
-        X->height = std::max(height(X->left), height(X->left)) + 1;
-        Y->height = std::max(height(Y->left), height(Y->right)) + 1;
+        fix(X);
+        fix(Y);
 
         return Y;
-    }
-
-    int64_t diffHeightLR(Node<T>* N){
-        if(N == nullptr) return 0;
-        return height(N->left) - height(N->right);
     }
 
     Node<T>* insertNode(Node<T>* node, T val){
@@ -67,75 +89,21 @@ private:
         if(val < node->value) node->left = insertNode(node->left, val);
         else node->right = insertNode(node->right, val);
 
-        node->height = std::max(height(node->left), height(node->right)) + 1;
-
-        int64_t balance = diffHeightLR(node);
-        
-        if(balance > 1 && val < node->left->value){
-            return rightRotate(node);
-        }
-        if(balance < -1 && val > node->right->value){
-            return leftRotate(node);
-        }
-        if(balance > 1 && val > node->left->value){
-            node->left = leftRotate(node->left);
-            return rightRotate(node);
-        }
-        if(balance < -1 && val < node->right->value){
-            node->right = rightRotate(node->right);
-            return leftRotate(node);
-        }
-
-        return node;
-    }
-
-    Node<T>* minValueNode(Node<T>* node){
-        if(node->left != nullptr)  node = minValueNode(node->left);
+        fix(node);
+        node = balance(node);
         return node;
     }
 
     Node<T>* removeNode(Node<T>* node, T val){
-        if(node == nullptr) return node;
-
-        if(val < node->value){
-            node->left = removeNode(node->left, val);
-        }
-        else if(val > node->value){
-            node->right = removeNode(node->right, val);
-        }
-        else{
-            if(node->left == nullptr && node->right == nullptr){
-                node = nullptr;
-            }
-            else if(node->left == nullptr || node->right == nullptr){
-                *node = node->left ? *(node->left) : *(node->right);
-            }
-        }
-
+        node = findNode(node, val);
 
         if(node == nullptr) return node;
-
-        node->height = std::max(height(node->left), height(node->right)) + 1;
-
-        int64_t balance = diffHeightLR(node);
-        int64_t balanceL = diffHeightLR(node->left);
-        int64_t balanceR = diffHeightLR(node->right);
-
-        if(balance > 1 && balanceL >= 0){
-            return rightRotate(node);
-        }
-        if(balance > 1 && balanceL < 0){
-            node->left = leftRotate(node->left);
-            return rightRotate(node);
-        }
-        if(balance < -1 && balanceR <= 0){
-            return leftRotate(node);
-        }
-        if(balance < -1 && balanceR > 0){
-            node->right = rightRotate(node->right);
-            return leftRotate(node);
+        if(node->left == nullptr || node->right == nullptr){
+            *node = node->left ? *(node->left) : *(node->right);
         }
 
+        fix(node);              
+        node = balance(node);
         return node;
     }
 
