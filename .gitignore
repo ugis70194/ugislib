@@ -1,2 +1,7 @@
 /tmp/
+<<<<<<< HEAD
 /.vscode/
+=======
+/.vscode/
+*.json
+>>>>>>> 7c32005c157d4ffa2bea5e6817db324c066cdaad
