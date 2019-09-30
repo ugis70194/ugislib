@@ -1,35 +1,35 @@
-struct UnionFind{
-    vector<int> par;
-    vector<int> sizes;
+#include<vector>
+#include<algorithm>
+#include<cstdint>
 
-    UnionFind(int size) : par(size), sizes(size,1){
-        for(int i=0;i<size;i++) par[i] = i;
-    }
+class UnionFind{
+private:
+    using uint = std::uint_fast64_t;
+    std::vector<uint> par;
+    std::vector<uint> sizes;
 
-    bool unite(int x,int y){
-        x = find(x);
-        y = find(y);
-
-        if(x == y) return false;
-        if(sizes[x] < sizes[y]) swap(x,y);
-
-        par[y] = x;
-        sizes[x] += sizes[y];
-        sizes[y] = 0;
-
-        return true;
-    }
-
-    int find(int x){
-        if(par[x] == x) return x; 
+    uint find(uint x){
+        if(x == par[x]) return x;
         return par[x] = find(par[x]);
     }
-
-    bool isSame(int x,int y){
-        return find(x) == find(y);
+public:
+    UnionFind() = delete;
+    UnionFind(uint size) : par(size), sizes(size, 1){
+        for(uint i = 0; i < size; ++i) par[i] = i;
     }
 
-    int getSize(int x){
-        return sizes[find(x)];
+    bool unite(uint x, uint y){
+        x = find(x);
+        y = find(y);
+        if(x == y) return false;
+        
+        if(sizes[x] < sizes[y]) std::swap(x, y);
+        if(sizes[x] == sizes[y] && x > y) std::swap(x, y);
+        sizes[x] += sizes[y];
+        sizes[y] = 0;
+        par[y] = x;
+        return true;
     }
-};
+    bool same(uint x, uint y ){ return find(par[x]) == find(par[y]);}
+    uint getSize(uint x){return find(sizes[par[x]]);}
+}; 
