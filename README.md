@@ -1,2 +1,1 @@
-C++ algorithm  
-JS function
+競プロらいぶらり
