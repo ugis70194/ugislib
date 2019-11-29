@@ -9,6 +9,7 @@ private:
         Node<U>* left; 
         Node<U>* right;
         T value;
+        size_t sub;
         Node() : par(nullptr), left(nullptr), right(nullptr){}
     };
 private:
@@ -68,7 +69,6 @@ private:
         node->par = par;
         return node;
     }
-private:
     void splay(Node<T>* node){
         while(node->par) {
             Node<T>* par = node->par;
@@ -82,6 +82,20 @@ private:
                 else zig_zig(node);
             }
         }
+    }
+    T at(int k){
+        assert(size() > k);
+        Node<T>* node = root;
+        int idx = 0;
+        while(k != idx){
+            if(node->left != nullptr) idx = node->left->sub;
+            else idx = 0;
+
+            if(k == idx) return node->value;
+            if(k < idx) node = node->left; 
+            if(k > idx) {k -= (idx+1); node = node->right;}
+        }
+        return node->value;
     }
     
 public:

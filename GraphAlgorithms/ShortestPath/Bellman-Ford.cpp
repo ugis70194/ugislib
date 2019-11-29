@@ -2,22 +2,19 @@
 #include<vector>
 #include<algorithm>
 using namespace std;
-using ll = long long;
+using i64 = long long;
 
-struct edge{ll to,cost;};
-vector<edge> G[100100];
-vector<ll> dist;
-int V,E;//number of vertices and edges
+vector<i64> dist;
 
 //if find negative loop,return true
-bool Bellman_Ford(int start){
+bool Bellman_Ford(vector<vector<pair<int,int>>>& Graph,int V, int start){
     dist[start] = 0;
     for(int i=0;i<V;++i){
         for(int v=0;v<V;++v){
-            for(auto& e : G[v]){
+            for(auto& e : Graph[v]){
                 if(dist[v] == 1e18) continue;
-                if(dist[e.to] > dist[v] + e.cost){
-                    dist[e.to] = dist[v] + e.cost;
+                if(dist[e.first] > dist[v] + e.second){
+                    dist[e.first] = dist[v] + e.second;
                     if(i == V-1) return true;
                 }
             }

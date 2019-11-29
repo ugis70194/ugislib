@@ -1,10 +1,10 @@
-#define int long long 
+#define i64 long long 
 
-int POW(int x,int n){
-    int res = 1;
+i64 POW(i64 x,i64 n, i64 MOD = 1000000007){
+    i64 res = 1;
     while(n){
-        if(n%2) res *= x;
-        x *= x;
+        if(n%2) ((res *= x) %= MOD);
+        ((x *= x) %= MOD);
         n >>= 1;
     }
     return res;
