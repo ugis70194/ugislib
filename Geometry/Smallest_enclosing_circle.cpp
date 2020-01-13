@@ -5,17 +5,17 @@
 struct coor{ long double x, y;};
 class smallest_enclosing_circle{
 private:
-    std::vector<coor> points;
+    mutable std::vector<coor> points;
     coor c;
     long double r;
 
-    long double dist(coor P, coor Q) const {
+    long double dist(coor& P, coor& Q) const {
         long double dx = P.x - Q.x;
         long double dy = P.y - Q.y;
         return std::sqrt(dx*dx + dy*dy);
     }
 
-    long double max_dist(long double x, long double y){
+    long double max_dist(long double& x, long double& y) const {
         long double res = 0;
         coor P = {x, y};
         for(coor& Q : points){
@@ -24,7 +24,7 @@ private:
         return res;
     }
 
-    long double min_y(long double x){
+    long double min_y(long double& x) const {
         long double left = 0, right = 1000;
         for(int i = 0; i < 100; i++){
             long double y1 = (left*2 + right) / 3.0;
@@ -60,6 +60,6 @@ public:
         r = max_dist(x, y);
     }
 
-    coor center(){ return c; }
-    long double radius(){ return r; }
+    coor center() const { return c; }
+    long double radius() const { return r; }
 };
