@@ -35,9 +35,7 @@ public:
 };
 
 struct edge{
-    int from,to;
-    int weight;
-
+    int weight, from, to;
     bool operator <(const edge& e) const {
         return weight < e.weight;
     }
