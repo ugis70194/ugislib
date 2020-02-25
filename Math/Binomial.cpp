@@ -54,7 +54,7 @@ std::istream& operator>> (std::istream& in, mint& m){
     return in; 
 }
 
-mint comb(i64 n, i64 k) {
+mint binomial(i64 n, i64 k) {
     mint res = 1;
     for(int i = 0; i < k; i++) {
         res *= mint(n-i) / mint(k-i);
