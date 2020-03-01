@@ -31,5 +31,5 @@ public:
         return true;
     }
     bool isSame(uint x, uint y ){ return find(par[x]) == find(par[y]);}
-    uint getSize(uint x){return find(sizes[par[x]]);}
+    uint getSize(uint x){return sizes[par[x]];}
 }; 
