@@ -19,9 +19,9 @@ RUN useradd -m -u ${UID} docker && \
     unzip ac-library.zip && \
     mv ./atcoder /home/docker/local/include && \
     rm -rf  boost_1_77_0.tar.bz2 boost_1_77_0 \ 
-            ac-library.zip document_en document_ja expander.py && \
-    alias g++="g++ -std=gnu++17"
+            ac-library.zip document_en document_ja expander.py
 USER docker
 WORKDIR /home/docker/work
+RUN alias g++="g++ -std=gnu++17"
 ENV CPLUS_INCLUDE_PATH="/home/docker/local/include:$CPLUS_INCLUDE_PATH" \
     LIBRARY_PATH="/home/docker/local/lib:$LIBRARY_PATH" \ 
