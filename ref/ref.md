@@ -1,0 +1,5 @@
+[サイボウズ 2021年エンジニア新人研修講義資料](https://blog.cybozu.io/entry/2021/07/20/100000)
+[apt-listsについて](https://guldra-cranch.hatenablog.com/entry/2020/11/07/172749)
+[CMD命令とENTRYPOINT命令について](https://www.creationline.com/lab/39662)
+[ユーザをdockerグループに入れる](https://qiita.com/tifa2chan/items/9dc28a56efcfb50c7fbe)
+[コンテナ内にユーザーを作成する](https://zukucode.com/2019/06/docker-user.html)

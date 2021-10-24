@@ -1,4 +1,13 @@
-/Ztmp
-*.json
-/.vscode
-
+.vscode
+a.cpp
+b.cpp
+c.cpp
+d.cpp
+e.cpp
+f.cpp
+g.cpp
+h.cpp
+i.cpp
+j.cpp
+k.cpp
+*.out

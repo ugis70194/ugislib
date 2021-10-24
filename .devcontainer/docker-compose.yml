@@ -1,0 +1,7 @@
+version: '3'
+services:
+  kyopro:
+    build: .
+    volumes:
+      - ../:/home/docker/work
+    tty: true

@@ -1,0 +1,12 @@
+{
+    "name": "kyopro",
+    "dockerComposeFile": "docker-compose.yml",
+    "service": "kyopro",
+    "workspaceFolder": "/home/docker/work",
+    "extensions": [
+        "ms-vscode.cpptools",
+        "oderwat.indent-rainbow",
+        "github.github-vscode-theme",
+    ],
+    "remoteUser": "docker"
+}
