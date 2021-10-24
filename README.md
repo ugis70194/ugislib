@@ -26,3 +26,10 @@
 proxy環境下でうまく動くかわからないけど、proxy通せば多分動くと思う。  
 [プロキシのある環境でDockerを動かす方法](https://qiita.com/dkoide/items/ca1f4549dc426eaf3735)
 
+VScodeを使わない人も`.devcontainer`の中身を取り出して、 
+```
+docker-compose build
+docker-compose up
+docker-compose exec kyopro /bin/bash
+```
+でコンテナに入れるはず
