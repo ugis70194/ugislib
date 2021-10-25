@@ -22,6 +22,6 @@ RUN useradd -m -u ${UID} docker && \
             ac-library.zip document_en document_ja expander.py
 USER docker
 WORKDIR /home/docker/work
-RUN alias g++="g++ -std=gnu++17"
+RUN echo "alias g++='g++ -std=gnu++17'" >> /home/docker/.bashrc
 ENV CPLUS_INCLUDE_PATH="/home/docker/local/include:$CPLUS_INCLUDE_PATH" \
     LIBRARY_PATH="/home/docker/local/lib:$LIBRARY_PATH" \ 
