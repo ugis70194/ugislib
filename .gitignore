@@ -10,3 +10,4 @@ i.cpp
 j.cpp
 k.cpp
 *.out
+*.exe
